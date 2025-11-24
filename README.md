@@ -61,7 +61,7 @@ faculdade-ta-5/
 
 1. Clone o repositorio:
 ```bash
-git clone https://github.com/seu-usuario/faculdade-ta-5.git
+git clone https://github.com/eduumach/faculdade-ta-5.git
 cd faculdade-ta-5
 ```
 
