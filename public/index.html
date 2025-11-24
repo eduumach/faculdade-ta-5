@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Monitoramento - Tempo Real</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1 class="header-title">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+        Dashboard de Monitoramento
+      </h1>
+      <div class="header-info">
+        <div class="connection-status" id="connectionStatus">
+          <span class="status-dot"></span>
+          <span class="status-text">Conectando...</span>
+        </div>
+        <div class="users-count">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span id="usersCount">0</span> online
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Cards de Metricas -->
+    <section class="metrics-cards">
+      <div class="metric-card" id="cpuCard">
+        <div class="metric-header">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <rect x="9" y="9" width="6" height="6"/>
+            <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/>
+          </svg>
+          <span>CPU</span>
+        </div>
+        <div class="metric-value">
+          <span id="cpuValue">0</span>
+          <span class="metric-unit">%</span>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill" id="cpuBar"></div>
+        </div>
+      </div>
+
+      <div class="metric-card" id="memoryCard">
+        <div class="metric-header">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 19v-3"/>
+            <path d="M10 19v-6"/>
+            <path d="M14 19v-9"/>
+            <path d="M18 19V7"/>
+            <rect x="2" y="3" width="20" height="18" rx="2"/>
+          </svg>
+          <span>Memoria</span>
+        </div>
+        <div class="metric-value">
+          <span id="memoryValue">0</span>
+          <span class="metric-unit">%</span>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill" id="memoryBar"></div>
+        </div>
+      </div>
+
+      <div class="metric-card" id="requestsCard">
+        <div class="metric-header">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"/>
+            <path d="M12 5l7 7-7 7"/>
+          </svg>
+          <span>Requisicoes/s</span>
+        </div>
+        <div class="metric-value">
+          <span id="requestsValue">0</span>
+          <span class="metric-unit">req/s</span>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill" id="requestsBar"></div>
+        </div>
+      </div>
+
+      <div class="metric-card" id="responseTimeCard">
+        <div class="metric-header">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Tempo Resposta</span>
+        </div>
+        <div class="metric-value">
+          <span id="responseTimeValue">0</span>
+          <span class="metric-unit">ms</span>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill" id="responseTimeBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Graficos -->
+    <section class="charts-section">
+      <div class="chart-container">
+        <h3 class="section-title">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/>
+            <path d="M18 17l-5-5-4 4-3-3"/>
+          </svg>
+          CPU e Memoria
+        </h3>
+        <canvas id="cpuMemoryChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h3 class="section-title">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/>
+            <path d="M7 17l4-8 4 4 6-6"/>
+          </svg>
+          Requisicoes e Tempo de Resposta
+        </h3>
+        <canvas id="requestsChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Alertas e Logs -->
+    <section class="bottom-section">
+      <div class="alerts-container">
+        <h3 class="section-title">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Alertas Recentes
+        </h3>
+        <div class="alerts-list" id="alertsList">
+          <div class="empty-state">Nenhum alerta registrado</div>
+        </div>
+      </div>
+
+      <div class="logs-container">
+        <h3 class="section-title">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          Streaming de Logs
+        </h3>
+        <div class="logs-list" id="logsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast de Notificacao -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

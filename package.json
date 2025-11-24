@@ -1,0 +1,22 @@
+{
+  "name": "dashboard-monitoramento",
+  "version": "1.0.0",
+  "description": "Dashboard de monitoramento de sistemas em tempo real com Socket.io",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "socket.io",
+    "dashboard",
+    "monitoramento",
+    "tempo-real"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
